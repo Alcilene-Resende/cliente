@@ -2,3 +2,6 @@
 *.db
 *.sqlite
 *.sqlite3 
+__Ppycache__
+*.pyc
+*.pyo

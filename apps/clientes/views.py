@@ -75,10 +75,27 @@ def login_usuario(request):
                 login(request, usuario)
                 return redirect('novo_cliente')
         else:
-            return HttpResponse(request, "Usuário ou senha inválidos.")
+            return HttpResponse('<h1>Usuário ou senha inválidos </h1>')
     else:
         form = AuthenticationForm()
 
     context = {'form': form}
 
+    return render(request, template_name, context)
+
+ 
+def novo_usuario(request):
+    template_name= 'novo_usuario.html'
+    if request.method == 'POST':
+        form = NovoUsuario(request.POST)
+        if form.is_valid():
+            f = form.save(commit=False)
+            f.set_password(f.password)
+            f.save()
+            return redirect('login_usuario')
+        else:
+            return HttpResponse('<h1>Erro ao criar o usuário</h1>')
+    else:
+        form = NovoUsuario()
+    context = {'form': form}
     return render(request, template_name, context)
